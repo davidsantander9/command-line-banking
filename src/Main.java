@@ -1,3 +1,4 @@
+import commands.Command;
 import handlers.PropertyHandler;
 
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class Main {
 
             if(isLoggedIn) {
                 System.out.printf("Successfully logged in as %s%n", username);
-                //runCommandListener();
+                Command.runCommandListener();
             }
             else
                 System.err.println("You have reached your attempts limit");
