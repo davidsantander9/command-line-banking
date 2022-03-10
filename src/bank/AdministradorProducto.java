@@ -47,8 +47,8 @@ public class AdministradorProducto {
 
     public List<ProductoFinanciero> getProductos(String numCliente) {
         List<ProductoFinanciero> productos = mapaProductos.get(numCliente);
-        if(productos == null)
-            System.out.println("El cliente no tiene productos asignados");
+        //if(productos == null)
+        //    System.out.println("\t El cliente no tiene productos asignados");
         return productos;
     }
 
