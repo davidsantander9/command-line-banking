@@ -44,7 +44,7 @@ public class Command {
                 "- chg-pass: change user password\n" +
                 "- create-acct: create account holder\n" +
                 "- show-accts: show all accounts \n" +
-                "- create-acct: create account holder\n" +
+                "- add-product: add product\n" +
                 "- exit: finishes the program");
     }
 
@@ -90,10 +90,27 @@ public class Command {
         System.out.println("Choose a account to add a product e.g: 3");
         System.out.print("Enter account: ");
         int indexAccount = Integer.parseInt(System.console().readLine());
+        System.out.println();
+        System.out.println("Credit card: 1");
+        System.out.println("Checking Account : 2");
+        System.out.println("Investment account: 3");
+        System.out.print("Enter type of product: ");
+        int typeProduct = Integer.parseInt(System.console().readLine());
 
-        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito());
-
+        switch (typeProduct){
+            case 1:
+                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito());
+                break;
+            case 2:
+                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques());
+                break;
+            case 3:
+                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion());
+                break;
+        }
     }
+
+
 
 }
 

@@ -2,10 +2,12 @@ package bank;
 
 public class TarjetaCredito implements ProductoFinanciero {
 
+    private String id;
     private double lineaCredito;
     private double saldo;
 
-    public TarjetaCredito(double lineaCredito) {
+    public TarjetaCredito(String id, double lineaCredito) {
+        this.id = id;
         this.lineaCredito = lineaCredito;
         this.saldo = 0;
     }
@@ -23,6 +25,16 @@ public class TarjetaCredito implements ProductoFinanciero {
         System.out.println("Estado de Cuenta - Tarjeta de Credito");
         System.out.println("Saldo: " + saldo);
         System.out.println("Línea de crédito: " + lineaCredito);
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void pagarTarjeta(double importe) {

@@ -5,11 +5,10 @@ import java.util.ArrayList;
 public class AdministradorCuentasHabientes {
 
     private ArrayList<CuentaHabiente> cuentasHabientes = new ArrayList<>();
-    private Configuracion conf;
+    private Configuracion conf = new Configuracion();;
     private AdministradorProducto adm;
 
     public AdministradorCuentasHabientes() {
-        conf = new Configuracion();
         conf.setMaxLineaCreditoPorIngresoMensual(4.0);
         adm = new AdministradorProducto(conf);
     }
@@ -38,15 +37,15 @@ public class AdministradorCuentasHabientes {
     }
 
     public static CuentaInversion getCuentaInversion(){
-        return new CuentaInversion(1000, 0.05, .15);
+        return new CuentaInversion("id",1000, 0.05, .15);
     }
 
     public static CuentaCheques getCuentaCheques(){
-        return new CuentaCheques(100, 5.0);
+        return new CuentaCheques("id", 100, 5.0);
     }
 
     public static TarjetaCredito getTarjetaCredito(){
-        return new TarjetaCredito(12000);
+        return new TarjetaCredito("id", 20000);
     }
 
 }

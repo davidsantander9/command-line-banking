@@ -2,8 +2,10 @@ package bank;
 
 public abstract class CuentaBancaria implements ProductoFinanciero {
     private double balance;
+    private String id;
 
-    public CuentaBancaria(double balanceInicial) {
+    public CuentaBancaria(String id, double balanceInicial) {
+        this.id = id;
         this.balance = balanceInicial;
     }
 
@@ -27,5 +29,16 @@ public abstract class CuentaBancaria implements ProductoFinanciero {
         return balance;
     }
 
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public abstract void imprimirEstadoCuenta();
+
 }

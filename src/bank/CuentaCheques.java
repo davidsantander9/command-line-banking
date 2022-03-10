@@ -4,8 +4,8 @@ public class CuentaCheques extends CuentaBancaria {
 
     private double comisionRetiro;
 
-    public CuentaCheques(double balanceInicial, double comisionRetiro) {
-        super(balanceInicial);
+    public CuentaCheques(String id, double balanceInicial, double comisionRetiro) {
+        super(id, balanceInicial);
         this.comisionRetiro = comisionRetiro;
     }
 
