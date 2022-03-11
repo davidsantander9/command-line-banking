@@ -47,6 +47,9 @@ public class Command {
                 case "cancel-products":
                     cancelProducts();
                     break;
+                case "cancel-acct":
+                    cancelAcct();
+                    break;
                 case "exit":
                     break;
                 default:
@@ -186,6 +189,14 @@ public class Command {
         String sure = HandlerInputs.readSingleWord("Enter 'yes' if you are sure: ");
         if(sure.equals("yes"))
             admAccounts.cancelarProductos(indexAccount);
+    }
+
+    private static void cancelAcct(){
+        int indexAccount = chooseAccount();
+        System.out.println("Are you sure you want cancel the account?");
+        String sure = HandlerInputs.readSingleWord("Enter 'yes' if you are sure: ");
+        if(sure.equals("yes"))
+            admAccounts.cancelarCuentaHabiente(indexAccount);
     }
 
 

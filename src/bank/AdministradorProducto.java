@@ -63,13 +63,17 @@ public class AdministradorProducto {
     public boolean puedeCancelar(Cliente cliente) {
         HashMap<String, ProductoFinanciero> productos = getProductos(cliente.getNumCliente());
         boolean resultado = true;
-        for(ProductoFinanciero pf : productos.values()) {
-            if(pf.getSaldo() != 0.0) {
-                resultado = false;
-                pf.imprimirEstadoCuenta();
+        if( productos != null){
+            for(ProductoFinanciero pf : productos.values()) {
+                if(pf.getSaldo() != 0.0) {
+                    resultado = false;
+                    pf.imprimirEstadoCuenta();
+                }
             }
+            return resultado;
+        }else{
+            return true;
         }
-        return resultado;
     }
 
 }

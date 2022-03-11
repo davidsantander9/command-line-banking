@@ -119,16 +119,32 @@ public class AdministradorCuentasHabientes {
 
     public void cancelarProductos(int index){
         try{
-            CuentaHabiente cuenta = cuentasHabientes.get(index);
-            Cliente cliente = cuenta.getCliente();
-            boolean cancelable =  adm.puedeCancelar(cliente);
-            if(cancelable){
-                adm.eliminarProductos(cliente);
+            if(productosCancelables(index)){
+                adm.eliminarProductos(cuentasHabientes.get(index).getCliente());
             }
-        }catch (NullPointerException exception){
+        }catch (IndexOutOfBoundsException exception){
             System.out.println("Error");
         }
+    }
 
+
+    public void cancelarCuentaHabiente(int index) {
+        try {
+            if (productosCancelables(index)) {
+                cuentasHabientes.remove(index);
+            }
+        } catch (IndexOutOfBoundsException exception) {
+            System.out.println("Error");
+        }
+    }
+
+
+    public boolean productosCancelables(int index){
+        try{
+            return adm.puedeCancelar(cuentasHabientes.get(index).getCliente());
+        }catch (IndexOutOfBoundsException exception){
+            return false;
+        }
     }
 
     public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){
