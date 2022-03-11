@@ -111,8 +111,23 @@ public class Command {
     }
 
     private static void productMovements(){
+        int typeOfMovement = chooseMovement();
         int indexAccount = chooseAccount();
-        admAccounts.mostraCuentasClientes(indexAccount);
+        String idProduct = chooseIdProduct(indexAccount);
+        switch (typeOfMovement){
+            case 1:
+                admAccounts.withdrawal(indexAccount, idProduct, 100);
+                break;
+            case 2:
+                System.out.println("Deposit");
+                break;
+            case 3:
+                System.out.println("Cutting");
+                break;
+            default:
+                System.err.print("Type of movement not recognized");
+        }
+
     }
 
     private static int chooseAccount(){
@@ -122,6 +137,24 @@ public class Command {
         System.out.print("Enter account: ");
         int indexAccount = Integer.parseInt(System.console().readLine());
         return indexAccount;
+    }
+
+    private static int chooseMovement(){
+        System.out.println();
+        System.out.println("1 Withdrawal");
+        System.out.println("2 Deposit");
+        System.out.println("3 Cutting");
+        System.out.println("Choose type of movement e.g.: 2");
+        int typeOfMovement = Integer.parseInt(System.console().readLine());
+        return typeOfMovement;
+    }
+
+    private static String chooseIdProduct(int indexAccount){
+        System.out.println("List of client products ");
+        admAccounts.mostraCuentasClientes(indexAccount);
+        System.out.println("Choose product id: ");
+        String idProduct = System.console().readLine();
+        return idProduct;
     }
 
 

@@ -47,10 +47,19 @@ public class AdministradorCuentasHabientes {
         HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
         for(ProductoFinanciero producto: productos.values()){
             String textClass = producto.getClass().toString();
-            String tipoProducto = textClass.substring(textClass.indexOf(".") + 1);
+            String tipoProducto = textClass.substring(textClass.indexOf("."));
             System.out.println("id " + producto.getId() + " type of product: " + tipoProducto);
         }
     }
+
+
+    public void withdrawal(int index, String id, double ammount){
+        HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
+        if(productos.get(id) instanceof TarjetaCredito){
+            ((TarjetaCredito) productos.get(id)).cargarTarjeta(ammount);
+        }
+    }
+
 
     public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){
         return new CuentaInversion(id, balance, interesAlCorte, impuesto);
@@ -63,5 +72,4 @@ public class AdministradorCuentasHabientes {
     public static TarjetaCredito getTarjetaCredito(String id, double lineaCredito){
         return new TarjetaCredito(id, lineaCredito);
     }
-
 }
