@@ -3,6 +3,7 @@ package commands;
 
 import bank.AdministradorCuentasHabientes;
 import bank.Cliente;
+import handlers.HandlerInputs;
 import handlers.PropertyHandler;
 
 public class Command {
@@ -79,15 +80,9 @@ public class Command {
     }
 
     private static void createAccountHolder(){
-        System.out.print("Enter number client: ");
-        String nameClient = new String(System.console().readLine());
-
-        System.out.print("Enter client name: ");
-        String numClient = new String(System.console().readLine());
-
-        System.out.print("Enter monthlyIncome: ");
-        double monthlyIncome = Double.parseDouble(System.console().readLine());
-
+        String numClient = HandlerInputs.readIdNumber("Enter client number: ");
+        String nameClient = HandlerInputs.readSingleWord("Enter client name: ");
+        double monthlyIncome = HandlerInputs.readDouble("Enter monthlyIncome: ");
         admAccounts.agregarCuentaHabiente( new Cliente(nameClient, numClient, monthlyIncome));
     }
 
@@ -122,25 +117,22 @@ public class Command {
     private static int chooseAccount(){
         admAccounts.mostrarInfoCuentasHabiente();
         System.out.println();
-        System.out.println("Choose a account e.g: 3");
-        System.out.print("Enter account: ");
-        int indexAccount = Integer.parseInt(System.console().readLine());
+        System.out.println("Choose a account e.g: 3 ");
+        int indexAccount = HandlerInputs.readInteger("Enter account : ");
         return indexAccount;
     }
 
     private static void withdrawal(){
         int indexAccount = chooseAccount();
         String idProduct = chooseIdProduct(indexAccount);
-        System.out.print("Enter amount: ");
-        double amount = Double.parseDouble(System.console().readLine());
+        double amount = HandlerInputs.readDouble("Enter amount: ");
         admAccounts.retiro(indexAccount, idProduct, amount);
     }
 
     private static void deposit(){
         int indexAccount = chooseAccount();
         String idProduct = chooseIdProduct(indexAccount);
-        System.out.print("Enter amount: ");
-        double amount = Double.parseDouble(System.console().readLine());
+        double amount = HandlerInputs.readDouble("Enter amount: ");
         admAccounts.deposito(indexAccount, idProduct, amount);
     }
 
@@ -153,8 +145,7 @@ public class Command {
     private static String chooseIdProduct(int indexAccount){
         System.out.println("List of client products ");
         admAccounts.mostraCuentasClientes(indexAccount);
-        System.out.println("Choose product id: ");
-        String idProduct = System.console().readLine();
+        String idProduct = HandlerInputs.readIdNumber("Choose product id: ");
         return idProduct;
     }
 
@@ -163,8 +154,5 @@ public class Command {
         String idProduct = chooseIdProduct(indexAccount);
         admAccounts.imprimirEstadoCuenta(indexAccount, idProduct);
     }
-
-
-
 }
 

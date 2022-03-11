@@ -50,12 +50,19 @@ public class AdministradorCuentasHabientes {
                 String tipoProducto = textClass.substring(textClass.indexOf("."));
                 System.out.println("id: " + producto.getId() + " type of product: " + tipoProducto);
             }
+        }else{
+            System.out.println("No info");
         }
     }
 
     public ProductoFinanciero getProduct(int index, String id){
-        HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
-        return productos.get(id);
+        try{
+            HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
+            return productos.get(id);
+        } catch (NullPointerException exception){
+            System.out.println("Invalid");
+            return null;
+        }
     }
 
     public void retiro(int index, String id, double amount){
