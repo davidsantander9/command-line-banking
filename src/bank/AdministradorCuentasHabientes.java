@@ -2,16 +2,15 @@ package bank;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class AdministradorCuentasHabientes {
 
-    private ArrayList<CuentaHabiente> cuentasHabientes = new ArrayList<>();
-    private HashMap<String, Cliente> clientes = new HashMap<>();
-    private Configuracion conf = new Configuracion();;
-    private AdministradorProducto adm;
+    final private ArrayList<CuentaHabiente> cuentasHabientes = new ArrayList<>();
+    final private HashMap<String, Cliente> clientes = new HashMap<>();
+    final private AdministradorProducto adm;
 
     public AdministradorCuentasHabientes() {
+        Configuracion conf = new Configuracion();
         conf.setMaxLineaCreditoPorIngresoMensual(4.0);
         adm = new AdministradorProducto(conf);
     }
@@ -48,18 +47,44 @@ public class AdministradorCuentasHabientes {
         for(ProductoFinanciero producto: productos.values()){
             String textClass = producto.getClass().toString();
             String tipoProducto = textClass.substring(textClass.indexOf("."));
-            System.out.println("id " + producto.getId() + " type of product: " + tipoProducto);
+            System.out.println("id: " + producto.getId() + " type of product: " + tipoProducto);
         }
     }
 
-
-    public void withdrawal(int index, String id, double ammount){
+    public ProductoFinanciero getProduct(int index, String id){
         HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
-        if(productos.get(id) instanceof TarjetaCredito){
-            ((TarjetaCredito) productos.get(id)).cargarTarjeta(ammount);
+        return productos.get(id);
+    }
+
+    public void retiro(int index, String id, double amount){
+        ProductoFinanciero producto = getProduct(index, id);
+        if(producto instanceof TarjetaCredito){
+            ((TarjetaCredito) producto).cargarTarjeta(amount);
+        }else if(producto instanceof CuentaBancaria) {
+            ((CuentaBancaria) producto).reducirFondos(amount);
         }
     }
 
+    public void deposito(int index, String id, double amount){
+        ProductoFinanciero producto = getProduct(index, id);
+        if(producto instanceof TarjetaCredito){
+            ((TarjetaCredito) producto).pagarTarjeta(amount);
+        }else if(producto instanceof CuentaBancaria) {
+            ((CuentaBancaria) producto).agregarFondos(amount);
+        }
+    }
+
+    public void corte(int index, String id){
+        ProductoFinanciero producto = getProduct(index, id);
+        if(producto instanceof CuentaInversion){
+            ((CuentaInversion) producto).aplicarCorte();
+        }
+    }
+
+    public void imprimirEstadoCuenta(int index, String id){
+        System.out.println("*** " + cuentasHabientes.get(index).getCliente().getNombre() + " ***");
+        getProduct(index, id).imprimirEstadoCuenta();
+    }
 
     public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){
         return new CuentaInversion(id, balance, interesAlCorte, impuesto);

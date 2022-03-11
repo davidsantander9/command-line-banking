@@ -31,8 +31,17 @@ public class Command {
                 case "add-product":
                     addProduct();
                     break;
-                case "move-product":
-                    productMovements();
+                case "withdrawal":
+                    withdrawal();
+                    break;
+                case "deposit":
+                    deposit();
+                    break;
+                case "cutting":
+                    cutting();
+                    break;
+                case "statement":
+                    statement();
                     break;
                 case "exit":
                     break;
@@ -79,8 +88,7 @@ public class Command {
         System.out.print("Enter monthlyIncome: ");
         double monthlyIncome = Double.parseDouble(System.console().readLine());
 
-        Cliente client = new Cliente(nameClient, numClient, monthlyIncome);
-        admAccounts.agregarCuentaHabiente(client);
+        admAccounts.agregarCuentaHabiente( new Cliente(nameClient, numClient, monthlyIncome));
     }
 
     private static void showAccounts(){
@@ -98,7 +106,7 @@ public class Command {
 
         switch (typeProduct){
             case 1:
-                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito("1", 0));
+                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito("1", 20000));
                 break;
             case 2:
                 admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques("2", 20000, .05));
@@ -110,43 +118,36 @@ public class Command {
         }
     }
 
-    private static void productMovements(){
-        int typeOfMovement = chooseMovement();
-        int indexAccount = chooseAccount();
-        String idProduct = chooseIdProduct(indexAccount);
-        switch (typeOfMovement){
-            case 1:
-                admAccounts.withdrawal(indexAccount, idProduct, 100);
-                break;
-            case 2:
-                System.out.println("Deposit");
-                break;
-            case 3:
-                System.out.println("Cutting");
-                break;
-            default:
-                System.err.print("Type of movement not recognized");
-        }
-
-    }
 
     private static int chooseAccount(){
         admAccounts.mostrarInfoCuentasHabiente();
         System.out.println();
-        System.out.println("Choose a account to add a product e.g: 3");
+        System.out.println("Choose a account e.g: 3");
         System.out.print("Enter account: ");
         int indexAccount = Integer.parseInt(System.console().readLine());
         return indexAccount;
     }
 
-    private static int chooseMovement(){
-        System.out.println();
-        System.out.println("1 Withdrawal");
-        System.out.println("2 Deposit");
-        System.out.println("3 Cutting");
-        System.out.println("Choose type of movement e.g.: 2");
-        int typeOfMovement = Integer.parseInt(System.console().readLine());
-        return typeOfMovement;
+    private static void withdrawal(){
+        int indexAccount = chooseAccount();
+        String idProduct = chooseIdProduct(indexAccount);
+        System.out.print("Enter amount: ");
+        double amount = Double.parseDouble(System.console().readLine());
+        admAccounts.retiro(indexAccount, idProduct, amount);
+    }
+
+    private static void deposit(){
+        int indexAccount = chooseAccount();
+        String idProduct = chooseIdProduct(indexAccount);
+        System.out.print("Enter amount: ");
+        double amount = Double.parseDouble(System.console().readLine());
+        admAccounts.deposito(indexAccount, idProduct, amount);
+    }
+
+    private static void cutting(){
+        int indexAccount = chooseAccount();
+        String idProduct = chooseIdProduct(indexAccount);
+        admAccounts.corte(indexAccount, idProduct);
     }
 
     private static String chooseIdProduct(int indexAccount){
@@ -155,6 +156,12 @@ public class Command {
         System.out.println("Choose product id: ");
         String idProduct = System.console().readLine();
         return idProduct;
+    }
+
+    private static void statement(){
+        int indexAccount = chooseAccount();
+        String idProduct = chooseIdProduct(indexAccount);
+        admAccounts.imprimirEstadoCuenta(indexAccount, idProduct);
     }
 
 
