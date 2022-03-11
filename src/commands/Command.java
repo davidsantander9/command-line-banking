@@ -110,6 +110,8 @@ public class Command {
                 //String id, double balance, double interesAlCorte, double impuesto
                 admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion("3", 2000, .05, .15));
                 break;
+            default:
+                System.err.println("Invalid option");
         }
     }
 

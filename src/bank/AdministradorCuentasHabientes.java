@@ -25,7 +25,12 @@ public class AdministradorCuentasHabientes {
     }
 
     public void agregarProducto(int index, ProductoFinanciero product){
-        cuentasHabientes.get(index).agregarProducto(product);
+        try{
+            cuentasHabientes.get(index).agregarProducto(product);
+        }catch(IndexOutOfBoundsException e){
+            System.err.println("Error");
+        }
+
     }
 
     public void mostrarInfoCuentasHabiente(){
@@ -60,7 +65,7 @@ public class AdministradorCuentasHabientes {
             HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
             return productos.get(id);
         } catch (NullPointerException exception){
-            System.out.println("Invalid");
+            System.err.println("Error");
             return null;
         }
     }
