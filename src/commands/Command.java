@@ -31,6 +31,9 @@ public class Command {
                 case "add-product":
                     addProduct();
                     break;
+                case "move-product":
+                    productMovements();
+                    break;
                 case "exit":
                     break;
                 default:
@@ -85,11 +88,7 @@ public class Command {
     }
 
     private static void addProduct(){
-        admAccounts.mostrarInfoCuentasHabiente();
-        System.out.println();
-        System.out.println("Choose a account to add a product e.g: 3");
-        System.out.print("Enter account: ");
-        int indexAccount = Integer.parseInt(System.console().readLine());
+        int indexAccount = chooseAccount();
         System.out.println();
         System.out.println("Credit card: 1");
         System.out.println("Checking Account : 2");
@@ -99,15 +98,30 @@ public class Command {
 
         switch (typeProduct){
             case 1:
-                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito());
+                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito("1", 0));
                 break;
             case 2:
-                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques());
+                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques("2", 20000, .05));
                 break;
             case 3:
-                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion());
+                //String id, double balance, double interesAlCorte, double impuesto
+                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion("3", 2000, .05, .15));
                 break;
         }
+    }
+
+    private static void productMovements(){
+        int indexAccount = chooseAccount();
+        admAccounts.mostraCuentasClientes(indexAccount);
+    }
+
+    private static int chooseAccount(){
+        admAccounts.mostrarInfoCuentasHabiente();
+        System.out.println();
+        System.out.println("Choose a account to add a product e.g: 3");
+        System.out.print("Enter account: ");
+        int indexAccount = Integer.parseInt(System.console().readLine());
+        return indexAccount;
     }
 
 

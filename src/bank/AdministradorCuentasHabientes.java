@@ -1,6 +1,7 @@
 package bank;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdministradorCuentasHabientes {
 
@@ -14,8 +15,7 @@ public class AdministradorCuentasHabientes {
     }
 
     public void agregarCuentaHabiente(Cliente cliente){
-        CuentaHabiente cuentaHabiente = new CuentaHabiente(cliente, adm);
-        cuentasHabientes.add(cuentaHabiente);
+        cuentasHabientes.add(new CuentaHabiente(cliente, adm));
     }
 
     public void agregarProducto(int index, ProductoFinanciero product){
@@ -36,16 +36,25 @@ public class AdministradorCuentasHabientes {
         }
     }
 
-    public static CuentaInversion getCuentaInversion(){
-        return new CuentaInversion("id",1000, 0.05, .15);
+    public void mostraCuentasClientes(int index){
+        List<ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
+        for(ProductoFinanciero producto: productos){
+            String textClass = producto.getClass().toString();
+            String tipoProducto = textClass.substring(textClass.indexOf(".") + 1);
+            System.out.println("id " + producto.getId() + " type of product: " + tipoProducto);
+        }
     }
 
-    public static CuentaCheques getCuentaCheques(){
-        return new CuentaCheques("id", 100, 5.0);
+    public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){
+        return new CuentaInversion(id, balance, interesAlCorte, impuesto);
     }
 
-    public static TarjetaCredito getTarjetaCredito(){
-        return new TarjetaCredito("id", 20000);
+    public static CuentaCheques getCuentaCheques(String id, double balanceInicial, double comisionRetiro){
+        return new CuentaCheques(id, balanceInicial, comisionRetiro);
+    }
+
+    public static TarjetaCredito getTarjetaCredito(String id, double lineaCredito){
+        return new TarjetaCredito(id, lineaCredito);
     }
 
 }
