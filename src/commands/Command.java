@@ -8,7 +8,7 @@ import handlers.PropertyHandler;
 
 public class Command {
     private static final String PROP_PASSWORD = "system.password";
-    private static AdministradorCuentasHabientes admAccounts = new AdministradorCuentasHabientes();
+    private static final AdministradorCuentasHabientes admAccounts = new AdministradorCuentasHabientes();
 
     private Command(){}
     public static void runCommandListener() {
@@ -117,8 +117,7 @@ public class Command {
         admAccounts.mostrarInfoCuentasHabiente();
         System.out.println();
         System.out.println("Choose a account e.g: 3 ");
-        int indexAccount = HandlerInputs.readInteger("Enter account : ");
-        return indexAccount;
+        return HandlerInputs.readInteger("Enter account : ");
     }
 
     private static void withdrawal(){
@@ -144,8 +143,7 @@ public class Command {
     private static String chooseIdProduct(int indexAccount){
         System.out.println("List of client products ");
         admAccounts.mostraCuentasClientes(indexAccount);
-        String idProduct = HandlerInputs.readIdNumber("Choose product id: ");
-        return idProduct;
+        return HandlerInputs.readIdNumber("Choose product id: ");
     }
 
     private static void statement(){

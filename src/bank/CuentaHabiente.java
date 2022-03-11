@@ -1,7 +1,6 @@
 package bank;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class CuentaHabiente {
     private Cliente cliente;
