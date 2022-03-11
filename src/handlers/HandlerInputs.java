@@ -16,6 +16,22 @@ public class HandlerInputs {
         return input;
     }
 
+    public static Double readPercentage(String promp){
+        boolean validNumber = false;
+        double input = 0.0;
+        while(!validNumber){
+            try {
+                System.out.print(promp);
+                input = Double.parseDouble(System.console().readLine());
+                if(input > 0.0 && input < 2.0)
+                    validNumber = true;
+            }catch (NumberFormatException ex){
+                System.out.println("Incorrect value");
+            }
+        }
+        return input;
+    }
+
     public static int readInteger(String promp ){
         boolean validNumber = false;
         int input = 0;
@@ -55,4 +71,5 @@ public class HandlerInputs {
         }
         return input;
     }
+
 }

@@ -91,24 +91,21 @@ public class Command {
     }
 
     private static void addProduct(){
-        int indexAccount = chooseAccount();
         System.out.println();
         System.out.println("Credit card: 1");
         System.out.println("Checking Account : 2");
         System.out.println("Investment account: 3");
-        System.out.print("Enter type of product: ");
-        int typeProduct = Integer.parseInt(System.console().readLine());
+        int typeProduct = HandlerInputs.readInteger("Enter type of product: ");
 
         switch (typeProduct){
             case 1:
-                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito("1", 20000));
+                addCreditCard();
                 break;
             case 2:
-                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques("2", 20000, .05));
+                addCheckingAccount();
                 break;
             case 3:
-                //String id, double balance, double interesAlCorte, double impuesto
-                admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion("3", 2000, .05, .15));
+                addInvestmentAccount();
                 break;
             default:
                 System.err.println("Invalid option");
@@ -156,5 +153,32 @@ public class Command {
         String idProduct = chooseIdProduct(indexAccount);
         admAccounts.imprimirEstadoCuenta(indexAccount, idProduct);
     }
+
+    private static void addCreditCard(){
+        int indexAccount = chooseAccount();
+        String id = HandlerInputs.readIdNumber("Enter credit card id ");
+        double creditLimit = HandlerInputs.readDouble("Enter a credit Limit: ");
+        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito(id, creditLimit));
+
+    }
+
+    private static void addInvestmentAccount(){
+        int indexAccount = chooseAccount();
+        String id = HandlerInputs.readIdNumber("Enter account id: ");
+        double balance = HandlerInputs.readDouble("Enter initial balance: ");
+        double interest = HandlerInputs.readPercentage("Enter interest: ");
+        double taxes = HandlerInputs.readPercentage("Enter taxes: ");
+        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion(id, balance, interest, taxes));
+    }
+
+    private static void addCheckingAccount(){
+        int indexAccount = chooseAccount();
+        String id = HandlerInputs.readIdNumber("Enter account id: ");
+        double balance = HandlerInputs.readDouble("Enter initial balance: ");
+        double fee = HandlerInputs.readPercentage("Enter withdrawal fee: ");
+        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques(id, balance, fee));
+    }
+
+
 }
 

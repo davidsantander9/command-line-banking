@@ -34,6 +34,8 @@ public class AdministradorCuentasHabientes {
     }
 
     public void mostrarInfoCuentasHabiente(){
+        System.out.println();
+        System.out.println("*************************************************");
         for(int i = 0; i < cuentasHabientes.size(); i++){
             CuentaHabiente cuenta  = cuentasHabientes.get(i);
             String nombre = cuenta.getCliente().getNombre();
@@ -45,16 +47,22 @@ public class AdministradorCuentasHabientes {
             }
             System.out.printf("%d. client %s with number %s has %d accounts \n", i, nombre, numCliente, numeroCuentas);
         }
+        System.out.println("*************************************************");
+        System.out.println();
     }
 
     public void mostraCuentasClientes(int index){
         HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
         if(productos != null){
+            System.out.println();
+            System.out.println("*************************************************");
             for(ProductoFinanciero producto: productos.values()){
                 String textClass = producto.getClass().toString();
                 String tipoProducto = textClass.substring(textClass.indexOf("."));
                 System.out.println("id: " + producto.getId() + " type of product: " + tipoProducto);
             }
+            System.out.println("*************************************************");
+            System.out.println();
         }else{
             System.out.println("No info");
         }
