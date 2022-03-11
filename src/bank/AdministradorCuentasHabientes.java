@@ -7,6 +7,7 @@ import java.util.List;
 public class AdministradorCuentasHabientes {
 
     private ArrayList<CuentaHabiente> cuentasHabientes = new ArrayList<>();
+    private HashMap<String, Cliente> clientes = new HashMap<>();
     private Configuracion conf = new Configuracion();;
     private AdministradorProducto adm;
 
@@ -16,7 +17,12 @@ public class AdministradorCuentasHabientes {
     }
 
     public void agregarCuentaHabiente(Cliente cliente){
-        cuentasHabientes.add(new CuentaHabiente(cliente, adm));
+        if(clientes.get(cliente.getNumCliente()) == null){
+            clientes.put(cliente.getNumCliente(), cliente);
+            cuentasHabientes.add(new CuentaHabiente(cliente, adm));
+        }else{
+            System.out.println("Number client already exists");
+        }
     }
 
     public void agregarProducto(int index, ProductoFinanciero product){
@@ -33,7 +39,7 @@ public class AdministradorCuentasHabientes {
             if(cuenta.getProductos() != null){
                 numeroCuentas = cuenta.getProductos().size();
             }
-            System.out.printf("%d. El cliente %s con numero %s tiene %d cuentas \n", i, nombre, numCliente, numeroCuentas);
+            System.out.printf("%d. client %s with number %s has %d accounts \n", i, nombre, numCliente, numeroCuentas);
         }
     }
 
