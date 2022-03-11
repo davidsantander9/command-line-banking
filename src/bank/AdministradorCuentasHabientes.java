@@ -59,7 +59,7 @@ public class AdministradorCuentasHabientes {
             for(ProductoFinanciero producto: productos.values()){
                 String textClass = producto.getClass().toString();
                 String tipoProducto = textClass.substring(textClass.indexOf("."));
-                System.out.println("id: " + producto.getId() + " type of product: " + tipoProducto);
+                System.out.println("id: " + producto.getId() + " type of product: " + tipoProducto + " balance " + producto.getSaldo() );
             }
             System.out.println("*************************************************");
             System.out.println();
@@ -115,6 +115,20 @@ public class AdministradorCuentasHabientes {
             System.out.println("*** " + cuentasHabientes.get(index).getCliente().getNombre() + " ***");
             producto.imprimirEstadoCuenta();
         }
+    }
+
+    public void cancelarProductos(int index){
+        try{
+            CuentaHabiente cuenta = cuentasHabientes.get(index);
+            Cliente cliente = cuenta.getCliente();
+            boolean cancelable =  adm.puedeCancelar(cliente);
+            if(cancelable){
+                adm.eliminarProductos(cliente);
+            }
+        }catch (NullPointerException exception){
+            System.out.println("Error");
+        }
+
     }
 
     public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){

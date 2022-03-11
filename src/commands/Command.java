@@ -44,6 +44,9 @@ public class Command {
                 case "statement":
                     statement();
                     break;
+                case "cancel-products":
+                    cancelProducts();
+                    break;
                 case "exit":
                     break;
                 default:
@@ -175,6 +178,14 @@ public class Command {
         double balance = HandlerInputs.readDouble("Enter initial balance: ");
         double fee = HandlerInputs.readPercentage("Enter withdrawal fee: ");
         admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques(id, balance, fee));
+    }
+
+    private static void cancelProducts(){
+        int indexAccount = chooseAccount();
+        System.out.println("Are you sure you want delete all products?");
+        String sure = HandlerInputs.readSingleWord("Enter 'yes' if you are sure: ");
+        if(sure.equals("yes"))
+            admAccounts.cancelarProductos(indexAccount);
     }
 
 

@@ -8,7 +8,8 @@ public class HandlerInputs {
             try {
                 System.out.print(promp);
                 input = Double.parseDouble(System.console().readLine());
-                validNumber = true;
+                if (input > 0)
+                    validNumber = true;
             }catch (NumberFormatException ex){
                 System.out.println("Incorrect value");
             }
@@ -39,7 +40,9 @@ public class HandlerInputs {
             try {
                 System.out.print(promp);
                 input = Integer.parseInt(System.console().readLine());
-                validNumber = true;
+                if (input >= 0)
+                    validNumber = true;
+
             }catch (NumberFormatException ex){
                 System.out.println("Incorrect value");
             }

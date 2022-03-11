@@ -49,6 +49,10 @@ public class AdministradorProducto {
         }
     }
 
+    public void eliminarProductos(Cliente cliente){
+        mapaProductos.put(cliente.getNumCliente(), null);
+    }
+
     public HashMap<String ,ProductoFinanciero> getProductos(String numCliente) {
         HashMap productos = mapaProductos.get(numCliente);
         //if(productos == null)

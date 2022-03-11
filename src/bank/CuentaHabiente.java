@@ -35,6 +35,10 @@ public class CuentaHabiente {
         return administrador.getProductos(cliente.getNumCliente());
     }
 
+    public void eliminarProductos() {
+
+    };
+
     public boolean puedeCancelar(){
         return administrador.puedeCancelar(cliente);
     }
