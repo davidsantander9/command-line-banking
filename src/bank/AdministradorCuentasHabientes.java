@@ -1,6 +1,7 @@
 package bank;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AdministradorCuentasHabientes {
@@ -37,8 +38,8 @@ public class AdministradorCuentasHabientes {
     }
 
     public void mostraCuentasClientes(int index){
-        List<ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
-        for(ProductoFinanciero producto: productos){
+        HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
+        for(ProductoFinanciero producto: productos.values()){
             String textClass = producto.getClass().toString();
             String tipoProducto = textClass.substring(textClass.indexOf(".") + 1);
             System.out.println("id " + producto.getId() + " type of product: " + tipoProducto);

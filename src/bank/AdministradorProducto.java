@@ -7,16 +7,16 @@ import java.util.Map;
 
 public class AdministradorProducto {
     private Configuracion conf;
-    private Map<String, List<ProductoFinanciero>> mapaProductos = new HashMap<>();
+    private Map<String, HashMap<String,ProductoFinanciero>> mapaProductos = new HashMap<>();
 
     public AdministradorProducto(Configuracion conf) {
         this.conf = conf;
     }
 
-    public void agregarProducto(Cliente cliente, ProductoFinanciero producto) {
-        List<ProductoFinanciero> productos = mapaProductos.get(cliente.getNumCliente());
+    public void agregarProducto(Cliente cliente, ProductoFinanciero producto, String id) {
+        HashMap<String, ProductoFinanciero> productos = mapaProductos.get(cliente.getNumCliente());
         if(productos == null) {
-            productos = new ArrayList<>();
+            productos = new HashMap<>();
             mapaProductos.put(cliente.getNumCliente(), productos);
         }
         if(producto instanceof TarjetaCredito) {
@@ -29,7 +29,7 @@ public class AdministradorProducto {
         }
         if(producto instanceof CuentaInversion){
             boolean tieneCuentaCheques = false;
-            for(ProductoFinanciero productoCliente: productos){
+            for(ProductoFinanciero productoCliente: productos.values()){
                 if(productoCliente instanceof CuentaCheques){
                     tieneCuentaCheques = true;
                     break;
@@ -41,21 +41,25 @@ public class AdministradorProducto {
                 return;
             }
         }
-        System.out.println("Alta del producto aprobada");
-        productos.add(producto);
+        if(productos.get(id) == null){
+            productos.put(id, producto);
+            System.out.println("Alta del producto aprobada");
+        }else{
+            System.out.println("Ya existe el id del producto");
+        }
     }
 
-    public List<ProductoFinanciero> getProductos(String numCliente) {
-        List<ProductoFinanciero> productos = mapaProductos.get(numCliente);
+    public HashMap<String ,ProductoFinanciero> getProductos(String numCliente) {
+        HashMap productos = mapaProductos.get(numCliente);
         //if(productos == null)
         //    System.out.println("\t El cliente no tiene productos asignados");
         return productos;
     }
 
     public boolean puedeCancelar(Cliente cliente) {
-        List<ProductoFinanciero> productos = getProductos(cliente.getNumCliente());
+        HashMap<String, ProductoFinanciero> productos = getProductos(cliente.getNumCliente());
         boolean resultado = true;
-        for(ProductoFinanciero pf : productos) {
+        for(ProductoFinanciero pf : productos.values()) {
             if(pf.getSaldo() != 0.0) {
                 resultado = false;
                 pf.imprimirEstadoCuenta();

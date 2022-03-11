@@ -1,5 +1,6 @@
 package bank;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CuentaHabiente {
@@ -28,10 +29,10 @@ public class CuentaHabiente {
     }
 
     public void agregarProducto(ProductoFinanciero producto){
-        administrador.agregarProducto(cliente, producto);
+        administrador.agregarProducto(cliente, producto, producto.getId());
     }
 
-    public List<ProductoFinanciero> getProductos(){
+    public HashMap getProductos(){
         return administrador.getProductos(cliente.getNumCliente());
     }
 
