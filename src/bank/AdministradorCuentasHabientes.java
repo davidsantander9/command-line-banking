@@ -44,10 +44,12 @@ public class AdministradorCuentasHabientes {
 
     public void mostraCuentasClientes(int index){
         HashMap<String ,ProductoFinanciero> productos = cuentasHabientes.get(index).getProductos();
-        for(ProductoFinanciero producto: productos.values()){
-            String textClass = producto.getClass().toString();
-            String tipoProducto = textClass.substring(textClass.indexOf("."));
-            System.out.println("id: " + producto.getId() + " type of product: " + tipoProducto);
+        if(productos != null){
+            for(ProductoFinanciero producto: productos.values()){
+                String textClass = producto.getClass().toString();
+                String tipoProducto = textClass.substring(textClass.indexOf("."));
+                System.out.println("id: " + producto.getId() + " type of product: " + tipoProducto);
+            }
         }
     }
 
@@ -58,32 +60,41 @@ public class AdministradorCuentasHabientes {
 
     public void retiro(int index, String id, double amount){
         ProductoFinanciero producto = getProduct(index, id);
-        if(producto instanceof TarjetaCredito){
-            ((TarjetaCredito) producto).cargarTarjeta(amount);
-        }else if(producto instanceof CuentaBancaria) {
-            ((CuentaBancaria) producto).reducirFondos(amount);
+        if(producto != null){
+            if(producto instanceof TarjetaCredito){
+                ((TarjetaCredito) producto).cargarTarjeta(amount);
+            }else if(producto instanceof CuentaBancaria) {
+                ((CuentaBancaria) producto).reducirFondos(amount);
+            }
         }
     }
 
     public void deposito(int index, String id, double amount){
         ProductoFinanciero producto = getProduct(index, id);
-        if(producto instanceof TarjetaCredito){
-            ((TarjetaCredito) producto).pagarTarjeta(amount);
-        }else if(producto instanceof CuentaBancaria) {
-            ((CuentaBancaria) producto).agregarFondos(amount);
+        if(producto != null){
+            if(producto instanceof TarjetaCredito){
+                ((TarjetaCredito) producto).pagarTarjeta(amount);
+            }else if(producto instanceof CuentaBancaria) {
+                ((CuentaBancaria) producto).agregarFondos(amount);
+            }
         }
     }
 
     public void corte(int index, String id){
         ProductoFinanciero producto = getProduct(index, id);
-        if(producto instanceof CuentaInversion){
-            ((CuentaInversion) producto).aplicarCorte();
+        if(producto != null){
+            if(producto instanceof CuentaInversion){
+                ((CuentaInversion) producto).aplicarCorte();
+            }
         }
     }
 
     public void imprimirEstadoCuenta(int index, String id){
-        System.out.println("*** " + cuentasHabientes.get(index).getCliente().getNombre() + " ***");
-        getProduct(index, id).imprimirEstadoCuenta();
+        ProductoFinanciero producto = getProduct(index, id);
+        if(producto != null){
+            System.out.println("*** " + cuentasHabientes.get(index).getCliente().getNombre() + " ***");
+            producto.imprimirEstadoCuenta();
+        }
     }
 
     public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){
