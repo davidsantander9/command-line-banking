@@ -156,6 +156,11 @@ public class AdministradorCuentasHabientes {
         CuentaInversion.setIMPUESTO(impuesto);
     }
 
+    public void tranferencia(int indexOrigen, String idOrigen, int indexDestino, String idDestino, Double ammount){
+        retiro(indexOrigen, idOrigen, ammount);
+        deposito(indexDestino, idDestino, ammount);
+    }
+
     public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte){
         return new CuentaInversion(id, balance, interesAlCorte);
     }

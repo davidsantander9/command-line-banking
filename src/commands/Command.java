@@ -55,6 +55,9 @@ public class Command {
                 case "set-taxes":
                     setTaxes();
                     break;
+                case "transfer":
+                    transfer();
+                    break;
                 case "exit":
                     break;
                 default:
@@ -211,6 +214,19 @@ public class Command {
     private static void setTaxes(){
         double taxes = HandlerInputs.readDouble("Enter taxes: ");
         admAccounts.setImpuesto(taxes);
+    }
+
+    private static void transfer(){
+        System.out.println("Choose source product");
+        int indexAccountSource = chooseAccount();
+        String idProductSource = chooseIdProduct(indexAccountSource);
+        System.out.println("Choose destination product");
+        int indexAccountDestination = chooseAccount();
+        if(indexAccountDestination != indexAccountSource){
+            String idProductDestination= chooseIdProduct(indexAccountDestination);
+            double ammount = HandlerInputs.readDouble("Enter amount: ");
+            admAccounts.tranferencia(indexAccountSource, idProductSource, indexAccountDestination, idProductDestination, ammount);
+        }
     }
 
 }
