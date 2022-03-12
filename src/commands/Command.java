@@ -2,7 +2,6 @@ package commands;
 
 
 import bank.AdministradorCuentasHabientes;
-import bank.Cliente;
 import handlers.HandlerInputs;
 import handlers.PropertyHandler;
 
@@ -95,7 +94,7 @@ public class Command {
         String numClient = HandlerInputs.readIdNumber("Enter client number: ");
         String nameClient = HandlerInputs.readSingleWord("Enter client name: ");
         double monthlyIncome = HandlerInputs.readDouble("Enter monthlyIncome: ");
-        admAccounts.agregarCuentaHabiente( new Cliente(nameClient, numClient, monthlyIncome));
+        admAccounts.agregarCuentaHabiente( AdministradorCuentasHabientes.getCliente(nameClient, numClient, monthlyIncome));
     }
 
     private static void showAccounts(){

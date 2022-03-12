@@ -167,4 +167,8 @@ public class AdministradorCuentasHabientes {
     public static TarjetaCredito getTarjetaCredito(String id, double lineaCredito){
         return new TarjetaCredito(id, lineaCredito);
     }
+
+    public static Cliente getCliente(String nombreCliente,String numCliente,double ingresosMensuales){
+        return new Cliente(nombreCliente, numCliente, ingresosMensuales);
+    }
 }
