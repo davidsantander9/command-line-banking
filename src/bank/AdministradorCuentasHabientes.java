@@ -1,12 +1,12 @@
 package bank;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdministradorCuentasHabientes {
 
-    final private ArrayList<CuentaHabiente> cuentasHabientes = new ArrayList<>();
-    final private HashMap<String, Cliente> clientes = new HashMap<>();
+    //final private ArrayList<CuentaHabiente> cuentasHabientes = new ArrayList<>();
+    final private HashMap<String, CuentaHabiente> mapaCuentaHabiente = new HashMap<>();
+    //final private HashMap<String, Cliente> mapaCliente = new HashMap<>();
     final private AdministradorProducto adm;
     private Configuracion conf;
 
@@ -17,17 +17,16 @@ public class AdministradorCuentasHabientes {
     }
 
     public void agregarCuentaHabiente(Cliente cliente){
-        if(clientes.get(cliente.getNumCliente()) == null){
-            clientes.put(cliente.getNumCliente(), cliente);
-            cuentasHabientes.add(new CuentaHabiente(cliente, adm));
+        if(mapaCuentaHabiente.get(cliente.getNumCliente()) == null){
+            mapaCuentaHabiente.put(cliente.getNumCliente(), new CuentaHabiente(cliente, adm));
         }else{
             System.out.println("Number client already exists");
         }
     }
 
-    public void agregarProducto(int index, ProductoFinanciero product){
+    public void agregarProducto(String numCliente, ProductoFinanciero product){
         try{
-            cuentasHabientes.get(index).agregarProducto(product);
+            mapaCuentaHabiente.get(numCliente).agregarProducto(product);
         }catch(IndexOutOfBoundsException e){
             System.err.println("Error");
         }
@@ -36,53 +35,53 @@ public class AdministradorCuentasHabientes {
     public void mostrarInfoCuentasHabiente(){
         System.out.println();
         System.out.println("*************************************************");
-        for(int i = 0; i < cuentasHabientes.size(); i++){
-            CuentaHabiente cuenta  = cuentasHabientes.get(i);
-            System.out.print(i + " ");
-            cuenta.mostrarInformaciónCuenta();
+        if(mapaCuentaHabiente != null){
+            for(CuentaHabiente cuenta: mapaCuentaHabiente.values()){
+                cuenta.mostrarInformaciónCuenta();
+            }
+            System.out.println("*************************************************");
+            System.out.println();
         }
-        System.out.println("*************************************************");
-        System.out.println();
     }
 
-    public void mostrarProductosCliente(int index){
-        cuentasHabientes.get(index).mostrarProductos();
+    public void mostrarProductosCliente(String numCliente){
+        mapaCuentaHabiente.get(numCliente).mostrarProductos();
     }
 
 
-    public void retiro(int index, String id, double amount){
-        cuentasHabientes.get(index).retiroProducto(id, amount);
+    public void retiro(String numCliente, String id, double amount){
+        mapaCuentaHabiente.get(numCliente).retiroProducto(id, amount);
     }
 
-    public void deposito(int index, String id, double amount){
-        cuentasHabientes.get(index).depositoProducto(id, amount);
+    public void deposito(String numCliente, String id, double amount){
+        mapaCuentaHabiente.get(numCliente).depositoProducto(id, amount);
     }
 
-    public void corte(int index, String id){
-        cuentasHabientes.get(index).corteProducto(id);
+    public void corte(String numCliente, String id){
+        mapaCuentaHabiente.get(numCliente).corteProducto(id);
     }
 
-    public void imprimirEstadoCuenta(int index, String id){
-        cuentasHabientes.get(index).imprimirEstadoCuentaProducto(id);
+    public void imprimirEstadoCuenta(String numCliente, String id){
+        mapaCuentaHabiente.get(numCliente).imprimirEstadoCuentaProducto(id);
     }
 
-    public void cancelarProductos(int index){
-        cuentasHabientes.get(index).cancelarProductos();
+    public void cancelarProductos(String numCliente){
+        mapaCuentaHabiente.get(numCliente).cancelarProductos();
     }
 
-    public void cancelarCuentaHabiente(int index) {
+    public void cancelarCuentaHabiente(String numCliente) {
         try {
-            if (productosCancelables(index)) {
-                cuentasHabientes.remove(index);
+            if (productosCancelables(numCliente)) {
+                mapaCuentaHabiente.remove(numCliente);
             }
         } catch (IndexOutOfBoundsException exception) {
             System.out.println("Error");
         }
     }
 
-    public boolean productosCancelables(int index){
+    public boolean productosCancelables(String numClientex){
         try{
-            return adm.puedeCancelar(cuentasHabientes.get(index).getCliente());
+            return adm.puedeCancelar(mapaCuentaHabiente.get(numClientex).getCliente());
         }catch (IndexOutOfBoundsException exception){
             return false;
         }
@@ -96,10 +95,10 @@ public class AdministradorCuentasHabientes {
         CuentaInversion.setIMPUESTO(impuesto);
     }
 
-    public void tranferencia(int indexOrigen, String idOrigen, int indexDestino, String idDestino, Double ammount){
-        if(indexOrigen != indexDestino){
-            cuentasHabientes.get(indexOrigen).retiroProducto(idOrigen, ammount);
-            cuentasHabientes.get(indexDestino).depositoProducto(idDestino, ammount);
+    public void tranferencia(String numClienteOrigen, String idOrigen, String numClienteDestino, String idDestino, double amount){
+        if(!numClienteDestino.equals(numClienteOrigen)){
+            mapaCuentaHabiente.get(numClienteOrigen).retiroProducto(idOrigen, amount);
+            mapaCuentaHabiente.get(numClienteDestino).depositoProducto(idDestino, amount);
         }
     }
 

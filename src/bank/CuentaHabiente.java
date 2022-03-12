@@ -40,7 +40,7 @@ public class CuentaHabiente {
         if(this.getProductos() != null){
             numeroCuentas = this.getProductos().size();
         }
-        System.out.printf("%d. client %s with number %s has %d accounts \n", this.getCliente().getNombre(), this.getCliente().getNumCliente(), numeroCuentas);
+        System.out.printf("client %s with number %s has %d accounts \n", this.getCliente().getNombre(), this.getCliente().getNumCliente(), numeroCuentas);
     }
 
     public void mostrarProductos(){

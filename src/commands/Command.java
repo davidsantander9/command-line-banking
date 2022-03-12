@@ -71,7 +71,16 @@ public class Command {
                 "- chg-pass: change user password\n" +
                 "- create-acct: create account holder\n" +
                 "- show-accts: show all accounts \n" +
-                "- add-product: add product\n" +
+                "- withdrawal: withdrawal from a client product\n" +
+                "- deposit: deposit to a client product\n" +
+                "- cutting: cutting to a client product\n" +
+                "- statement: print a client product statement\n" +
+                "- cancel-products: cancel a client product statement \n" +
+                "- cancel-acct: cancel account client\n" +
+                "- set-max-credit-line: set max credit line\n" +
+                "- set-taxes: set percentage taxes\n" +
+                "- transfer: transfer from one product to another a \n" +
+                "- add-product: add product to a account client\n" +
                 "- exit: finishes the program");
     }
 
@@ -127,83 +136,83 @@ public class Command {
     }
 
 
-    private static int chooseAccount(){
+    private static String chooseClient(){
         admAccounts.mostrarInfoCuentasHabiente();
         System.out.println();
-        System.out.println("Choose a account e.g: 3 ");
-        return HandlerInputs.readInteger("Enter account : ");
+        System.out.println("Choose a number client e.g: 1234 ");
+        return HandlerInputs.readIdNumber("Enter number client : ");
     }
 
-    private static void withdrawal(){
-        int indexAccount = chooseAccount();
-        String idProduct = chooseIdProduct(indexAccount);
-        double amount = HandlerInputs.readDouble("Enter amount: ");
-        admAccounts.retiro(indexAccount, idProduct, amount);
-    }
-
-    private static void deposit(){
-        int indexAccount = chooseAccount();
-        String idProduct = chooseIdProduct(indexAccount);
-        double amount = HandlerInputs.readDouble("Enter amount: ");
-        admAccounts.deposito(indexAccount, idProduct, amount);
-    }
-
-    private static void cutting(){
-        int indexAccount = chooseAccount();
-        String idProduct = chooseIdProduct(indexAccount);
-        admAccounts.corte(indexAccount, idProduct);
-    }
-
-    private static String chooseIdProduct(int indexAccount){
+    private static String chooseIdProduct(String numClient){
         System.out.println("List of client products ");
-        admAccounts.mostrarProductosCliente(indexAccount);
+        admAccounts.mostrarProductosCliente(numClient);
         return HandlerInputs.readIdNumber("Choose product id: ");
     }
 
+    private static void withdrawal(){
+        String numClient = chooseClient();
+        String idProduct = chooseIdProduct(numClient);
+        double amount = HandlerInputs.readDouble("Enter amount: ");
+        admAccounts.retiro(numClient, idProduct, amount);
+    }
+
+    private static void deposit(){
+        String numClient = chooseClient();
+        String idProduct = chooseIdProduct(numClient);
+        double amount = HandlerInputs.readDouble("Enter amount: ");
+        admAccounts.deposito(numClient, idProduct, amount);
+    }
+
+    private static void cutting(){
+        String numClient = chooseClient();
+        String idProduct = chooseIdProduct(numClient);
+        admAccounts.corte(numClient, idProduct);
+    }
+
     private static void statement(){
-        int indexAccount = chooseAccount();
-        String idProduct = chooseIdProduct(indexAccount);
-        admAccounts.imprimirEstadoCuenta(indexAccount, idProduct);
+        String numClient = chooseClient();
+        String idProduct = chooseIdProduct(numClient);
+        admAccounts.imprimirEstadoCuenta(numClient, idProduct);
     }
 
     private static void addCreditCard(){
-        int indexAccount = chooseAccount();
+        String numClient = chooseClient();
         String id = HandlerInputs.readIdNumber("Enter credit card id ");
         double creditLimit = HandlerInputs.readDouble("Enter a credit Limit: ");
-        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getTarjetaCredito(id, creditLimit));
+        admAccounts.agregarProducto(numClient, AdministradorCuentasHabientes.getTarjetaCredito(id, creditLimit));
 
     }
 
     private static void addInvestmentAccount(){
-        int indexAccount = chooseAccount();
+        String numClient = chooseClient();
         String id = HandlerInputs.readIdNumber("Enter account id: ");
         double balance = HandlerInputs.readDouble("Enter initial balance: ");
         double interest = HandlerInputs.readPercentage("Enter interest: ");
-        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion(id, balance, interest));
+        admAccounts.agregarProducto(numClient, AdministradorCuentasHabientes.getCuentaInversion(id, balance, interest));
     }
 
     private static void addCheckingAccount(){
-        int indexAccount = chooseAccount();
+        String numClient = chooseClient();
         String id = HandlerInputs.readIdNumber("Enter account id: ");
         double balance = HandlerInputs.readDouble("Enter initial balance: ");
         double fee = HandlerInputs.readPercentage("Enter withdrawal fee: ");
-        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaCheques(id, balance, fee));
+        admAccounts.agregarProducto(numClient, AdministradorCuentasHabientes.getCuentaCheques(id, balance, fee));
     }
 
     private static void cancelProducts(){
-        int indexAccount = chooseAccount();
+        String numClient = chooseClient();
         System.out.println("Are you sure you want delete all products?");
         String sure = HandlerInputs.readSingleWord("Enter 'yes' if you are sure: ");
         if(sure.equals("yes"))
-            admAccounts.cancelarProductos(indexAccount);
+            admAccounts.cancelarProductos(numClient);
     }
 
     private static void cancelAcct(){
-        int indexAccount = chooseAccount();
+        String numClient = chooseClient();
         System.out.println("Are you sure you want cancel the account?");
         String sure = HandlerInputs.readSingleWord("Enter 'yes' if you are sure: ");
         if(sure.equals("yes"))
-            admAccounts.cancelarCuentaHabiente(indexAccount);
+            admAccounts.cancelarCuentaHabiente(numClient);
     }
 
     private static void setMaxCreditLine(){
@@ -218,14 +227,14 @@ public class Command {
 
     private static void transfer(){
         System.out.println("Choose source product");
-        int indexAccountSource = chooseAccount();
-        String idProductSource = chooseIdProduct(indexAccountSource);
+        String numClientSource = chooseClient();
+        String idProductSource = chooseIdProduct(numClientSource);
         System.out.println("Choose destination product");
-        int indexAccountDestination = chooseAccount();
-        if(indexAccountDestination != indexAccountSource){
-            String idProductDestination= chooseIdProduct(indexAccountDestination);
+        String numClientDestination = chooseClient();
+        if(numClientSource.equals(numClientDestination)){
+            String idProductDestination = chooseIdProduct(numClientSource);
             double ammount = HandlerInputs.readDouble("Enter amount: ");
-            admAccounts.tranferencia(indexAccountSource, idProductSource, indexAccountDestination, idProductDestination, ammount);
+            admAccounts.tranferencia(numClientSource, idProductSource, numClientDestination, idProductDestination, ammount);
         }
     }
 
