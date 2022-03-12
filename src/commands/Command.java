@@ -50,6 +50,9 @@ public class Command {
                 case "cancel-acct":
                     cancelAcct();
                     break;
+                case "set-credit-line":
+                    setMaxCreditLine();
+                    break;
                 case "exit":
                     break;
                 default:
@@ -197,6 +200,11 @@ public class Command {
         String sure = HandlerInputs.readSingleWord("Enter 'yes' if you are sure: ");
         if(sure.equals("yes"))
             admAccounts.cancelarCuentaHabiente(indexAccount);
+    }
+
+    private static void setMaxCreditLine(){
+        double maxCreditLine = HandlerInputs.readDouble("Enter maximum credit line per monthly income: ");
+        admAccounts.changeLineadeCreditoMaximaPorIngresoMensual(maxCreditLine);
     }
 
 

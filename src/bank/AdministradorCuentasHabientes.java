@@ -8,9 +8,10 @@ public class AdministradorCuentasHabientes {
     final private ArrayList<CuentaHabiente> cuentasHabientes = new ArrayList<>();
     final private HashMap<String, Cliente> clientes = new HashMap<>();
     final private AdministradorProducto adm;
+    private Configuracion conf;
 
     public AdministradorCuentasHabientes() {
-        Configuracion conf = new Configuracion();
+        this.conf = new Configuracion();
         conf.setMaxLineaCreditoPorIngresoMensual(4.0);
         adm = new AdministradorProducto(conf);
     }
@@ -145,6 +146,10 @@ public class AdministradorCuentasHabientes {
         }catch (IndexOutOfBoundsException exception){
             return false;
         }
+    }
+
+    public void changeLineadeCreditoMaximaPorIngresoMensual(double maxCreditLine){
+        this.conf.setMaxLineaCreditoPorIngresoMensual(maxCreditLine);
     }
 
     public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){
