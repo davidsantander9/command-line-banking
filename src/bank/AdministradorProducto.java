@@ -1,13 +1,13 @@
 package bank;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AdministradorProducto {
     private Configuracion conf;
     private Map<String, HashMap<String,ProductoFinanciero>> mapaProductos = new HashMap<>();
+    private static final String PROP_ = "system.username";
+    private static final String PROP_PASSWORD = "system.password";
 
     public AdministradorProducto(Configuracion conf) {
         this.conf = conf;

@@ -7,6 +7,7 @@ import handlers.PropertyHandler;
 
 public class Command {
     private static final String PROP_PASSWORD = "system.password";
+    private static final String PROP_MAX_CREDIT_LINE = "system.max.credit.line.per.monthly.income";
     private static final AdministradorCuentasHabientes admAccounts = new AdministradorCuentasHabientes();
 
     private Command(){}
@@ -217,7 +218,16 @@ public class Command {
 
     private static void setMaxCreditLine(){
         double maxCreditLine = HandlerInputs.readDouble("Enter maximum credit line per monthly income: ");
-        admAccounts.changeLineadeCreditoMaximaPorIngresoMensual(maxCreditLine);
+        admAccounts.changeLineadeCreditoMaximaPorIngresoMensual();
+        PropertyHandler.setProperty(PROP_MAX_CREDIT_LINE, String.valueOf(maxCreditLine));
+        try {
+            PropertyHandler.persist();
+            System.out.println("Maximum credit line per monthly income change");
+        } catch (Exception e) {
+            System.err.println("Password could not be set");
+            System.err.printf("%s: %s%n", e.getClass().getName(), e.getMessage());
+        }
+
     }
 
     private static void setTaxes(){
