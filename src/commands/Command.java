@@ -109,7 +109,7 @@ public class Command {
         System.out.println("Credit card: 1");
         System.out.println("Checking Account : 2");
         System.out.println("Investment account: 3");
-        int typeProduct = HandlerInputs.readInteger("Enter type of product: ");
+        int typeProduct = HandlerInputs.readInteger("\nEnter type of product: ");
 
         switch (typeProduct){
             case 1:
@@ -156,7 +156,7 @@ public class Command {
 
     private static String chooseIdProduct(int indexAccount){
         System.out.println("List of client products ");
-        admAccounts.mostraCuentasClientes(indexAccount);
+        admAccounts.mostrarProductosCliente(indexAccount);
         return HandlerInputs.readIdNumber("Choose product id: ");
     }
 
