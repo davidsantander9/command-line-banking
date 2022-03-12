@@ -50,8 +50,11 @@ public class Command {
                 case "cancel-acct":
                     cancelAcct();
                     break;
-                case "set-credit-line":
+                case "set-max-credit-line":
                     setMaxCreditLine();
+                    break;
+                case "set-taxes":
+                    setTaxes();
                     break;
                 case "exit":
                     break;
@@ -174,8 +177,7 @@ public class Command {
         String id = HandlerInputs.readIdNumber("Enter account id: ");
         double balance = HandlerInputs.readDouble("Enter initial balance: ");
         double interest = HandlerInputs.readPercentage("Enter interest: ");
-        double taxes = HandlerInputs.readPercentage("Enter taxes: ");
-        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion(id, balance, interest, taxes));
+        admAccounts.agregarProducto(indexAccount, AdministradorCuentasHabientes.getCuentaInversion(id, balance, interest));
     }
 
     private static void addCheckingAccount(){
@@ -207,6 +209,10 @@ public class Command {
         admAccounts.changeLineadeCreditoMaximaPorIngresoMensual(maxCreditLine);
     }
 
+    private static void setTaxes(){
+        double taxes = HandlerInputs.readDouble("Enter taxes: ");
+        admAccounts.setImpuesto(taxes);
+    }
 
 }
 

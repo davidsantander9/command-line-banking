@@ -148,12 +148,16 @@ public class AdministradorCuentasHabientes {
         }
     }
 
-    public void changeLineadeCreditoMaximaPorIngresoMensual(double maxCreditLine){
-        this.conf.setMaxLineaCreditoPorIngresoMensual(maxCreditLine);
+    public void changeLineadeCreditoMaximaPorIngresoMensual(double maxLineaCredito){
+        this.conf.setMaxLineaCreditoPorIngresoMensual(maxLineaCredito);
     }
 
-    public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte, double impuesto){
-        return new CuentaInversion(id, balance, interesAlCorte, impuesto);
+    public void setImpuesto(double impuesto){
+        CuentaInversion.setIMPUESTO(impuesto);
+    }
+
+    public static CuentaInversion getCuentaInversion(String id, double balance, double interesAlCorte){
+        return new CuentaInversion(id, balance, interesAlCorte);
     }
 
     public static CuentaCheques getCuentaCheques(String id, double balanceInicial, double comisionRetiro){

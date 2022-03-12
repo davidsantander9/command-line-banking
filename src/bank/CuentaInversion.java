@@ -4,10 +4,9 @@ public class CuentaInversion extends CuentaBancaria {
     public static double IMPUESTO = .15;
     private double interesAlCorte;
 
-    public CuentaInversion(String id, double balanceInicial, double interesAlCorte, double impuesto) {
+    public CuentaInversion(String id, double balanceInicial, double interesAlCorte) {
         super(id, balanceInicial);
         this.interesAlCorte = interesAlCorte;
-        CuentaInversion.IMPUESTO = impuesto;
     }
 
     public void aplicarCorte() {
